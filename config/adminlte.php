@@ -1,7 +1,8 @@
 <?php
 
 return [
-
+    
+    
     /*
     |--------------------------------------------------------------------------
     | Title
@@ -295,6 +296,12 @@ return [
             'type'         => 'navbar-search',
             'text'         => 'search',
             'topnav_right' => true,
+            'can'  => 'isAdmin',
+        ],
+        [
+            'text'         => 'Buku',
+            'url'         => 'admin/books',
+            'icon' => 'fas fa-fw fa-book',
             'can'  => 'isAdmin',
         ],
         [
