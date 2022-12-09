@@ -58,19 +58,19 @@
                 })
                 @endforeach
             @endif
-        @if(@errors->any())
-            Swal.fire({
-                        type: 'error',
-                        title:"Oopss",
-                        text: "Terjadi suatu kesalahan"
-                    })
-        @endif
-</script>
+            </script>
 
 <script>
-$('#table-data').DataTable();
-let baseurl = "<?=url('/')?>";
-let fullURL = "<?=url()->full()?>";
+    @if($errors->any())
+        Swal.fire({
+                    type: 'error',
+                    title:"Oopss",
+                    text: "Terjadi suatu kesalahan"
+                })
+    @endif
+    $('#table-data').DataTable();
+    let baseurl = "<?=url('/')?>";
+    let fullURL = "<?=url()->full()?>";
 </script>
 
 
