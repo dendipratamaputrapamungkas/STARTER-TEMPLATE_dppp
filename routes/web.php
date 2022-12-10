@@ -53,5 +53,7 @@ Route::delete('admin/books/delete/{id}', [App\Http\Controllers\AdminController::
                                                                 ->middleware('is_admin');
 
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'create']);
-
+Route::get('admin/print_books', [App\Http\Controllers\AdminController::class, 'print_books'])
+                                                                ->name('admin.print.books')
+                                                                ->middleware('is_admin');
 

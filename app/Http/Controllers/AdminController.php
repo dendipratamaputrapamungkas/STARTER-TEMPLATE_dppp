@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use App\Models\Book;
+use PDF;
+
 
 class AdminController extends Controller
 {
@@ -142,7 +144,7 @@ class AdminController extends Controller
 
         return redirect()->route('admin.books')->with($notification);
     }
-
+    
 }
 
 
