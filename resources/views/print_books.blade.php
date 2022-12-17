@@ -22,8 +22,8 @@
     </thead>
     <tbody>
         @php $no=1; @endphp
-        @foreach ($books as $item => $book)
-            <tr id="table-row{{$book->id}}">
+        @foreach ($books as $book)
+            <tr>
                 <td>{{$no++}}</td>
                 <td>{{$book->judul}}</td>
                 <td>{{$book->penulis}}</td>
