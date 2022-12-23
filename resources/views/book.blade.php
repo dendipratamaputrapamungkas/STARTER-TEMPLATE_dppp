@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'Home Page')
 @section('content_header')
-    <h1>Data Buku</h1>
+    <h1>Data Film</h1>
 @stop
 @section('content')
 <div class="container-fluid" id="page">
@@ -9,7 +9,7 @@
         <div class="card-header">{{__('Pengelolaan Buku')}}</div>
         <div class="card-body">
             <button class="btn btn-primary" data-toggle="modal" data-target="#tambahBukuModal">
-                Tambah Data <i class="fa fa-plus"></i> 
+                Tambah Film <i class="fa fa-plus"></i> 
             </button>
             <a href="{{ route('admin.print.books') }}" target="_blank" class="btn btn-danger">
                 <i class="fa fa-print"></i> Cetak PDF</a>
@@ -24,9 +24,9 @@
                     <tr class="text-center">
                         <th>NO</th>
                         <th>Judul</th>
-                        <th>Penulis</th>
+                        <th>Sutradara</th>
                         <th>Tahun</th>
-                        <th>Penerbit</th>
+                        <th>Rumah Produksi</th>
                         <th>Cover</th>
                         <th>Aksi</th>
                     </tr>
@@ -80,11 +80,11 @@
                     <form action="{{ route('admin.book.submit') }}" enctype="multipart/form-data" method="post">
                         @csrf
                         <div class="form-group">
-                            <label for="judul">Judul Buku</label>
+                            <label for="judul">Judul Film</label>
                             <input type="text" class="form-control" name="judul" id="judul" required/>
                         </div>
                         <div class="form-group">
-                            <label for="penulis">Penulis</label>
+                            <label for="penulis">Sutradara</label>
                             <input type="text" class="form-control" name="penulis" id="penulis" required/>
                         </div>
                         <div class="form-group">
@@ -92,7 +92,7 @@
                             <input type="year" class="form-control" name="tahun" id="tahun" required/>
                         </div>
                         <div class="form-group">
-                            <label for="penerbit">Penerbit</label>
+                            <label for="penerbit">Rumah Produksi</label>
                             <input type="text"  class="form-control" name="penerbit" id="penerbit" required/>
                         </div>
                         <div class="form-group">
@@ -112,7 +112,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Data Buku</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit Data Film</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -124,11 +124,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="edit-judul">Judul Buku</label>
+                                    <label for="edit-judul">Judul Film</label>
                                     <input type="text" class="form-control" name="judul" id="edit-judul" required/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="edit-penulis">Penulis</label>
+                                    <label for="edit-penulis">Sutradara</label>
                             <input type="text" class="form-control" name="penulis" id="edit-penulis" required/>
                         </div>
                         <div class="form-group">
@@ -136,7 +136,7 @@
                             <input type="year" class="form-control" name="tahun" id="edit-tahun" required/>
                         </div>
                         <div class="form-group">
-                            <label for="edit-penerbit">Penerbit</label>
+                            <label for="edit-penerbit">Rumah Produksi</label>
                             <input type="text"  class="form-control" name="penerbit" id="edit-penerbit" required/>
                         </div>
                     </div>
