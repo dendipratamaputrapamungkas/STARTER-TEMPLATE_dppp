@@ -33,6 +33,10 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('admin/books', [App\Http\Controllers\AdminController::class, 'book'])
+                                                                ->name('admin.books')
+                                                                ->middleware('is_user');
+
 Route::get('admin/home', [App\Http\Controllers\AdminController::class, 'index'])
                                                                 ->name('admin.home')
                                                                 ->middleware('is_admin');

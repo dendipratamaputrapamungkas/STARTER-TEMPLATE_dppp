@@ -6,21 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <title>Print Book PDF</title>
+    <title>Print Film data PDF</title>
 </head>
 <body>
 
-    <h1 class="text-center"> Data Buku</h1>
-    <p class="text-center">Laporan Buku Tahun 2022</p>
+    <h1 class="text-center"> Data Film</h1>
+    <p class="text-center">Laporan Film Tahun 2022</p>
     <br>
     <table id="table-data" class="table table-bordered">
         <thead>
             <tr>
                 <th>NO</th>
                 <th>JUDUL</th>
-                <th>PENULIS</th>
+                <th>SUTRADARA</th>
                 <th>TAHUN</th>
-                <th>PENERBIT</th>
+                <th>RUMAH PRODUKSI</th>
                 <th>COVER</th>
 
             </tr>

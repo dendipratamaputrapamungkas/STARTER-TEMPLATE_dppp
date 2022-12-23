@@ -6,7 +6,7 @@
 @section('content')
 <div class="container-fluid" id="page">
     <div class="card card-default">
-        <div class="card-header">{{__('Pengelolaan Buku')}}</div>
+        <div class="card-header">{{__('Pengelolaan Data Film')}}</div>
         <div class="card-body">
             <button class="btn btn-primary" data-toggle="modal" data-target="#tambahBukuModal">
                 Tambah Film <i class="fa fa-plus"></i> 
