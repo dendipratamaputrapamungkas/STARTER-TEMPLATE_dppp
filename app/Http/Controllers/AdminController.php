@@ -11,6 +11,7 @@ use PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BooksExport;
 use App\Imports\BooksImport;
+use Session;
 
 
 class AdminController extends Controller
@@ -63,11 +64,9 @@ class AdminController extends Controller
 
         $book->save();
 
-        $notification = array(
-            'message' => 'Data buku berhasil ditambahkan','alert-type'=>'succes'
-        );
+        Session::flash('status', 'Data Buku Berhasil Ditambahkan!!!');
         
-        return redirect()->route('admin.books')->with($notification);
+        return redirect()->route('admin.books');
     }
 
     //AJAX PROSES
@@ -84,7 +83,7 @@ class AdminController extends Controller
             'penulis' => 'required',
             'tahun' => 'required',
             'penerbit' => 'required',
-            'cover' => 'required|mimes:jpeg,png,jpg,gif,svg'
+            'cover' => 'mimes:jpeg,png,jpg,gif,svg'
         ]);
 
         $book->judul = $request->get('judul');
@@ -111,8 +110,8 @@ class AdminController extends Controller
                     'message' => 'Data buku berhasil diubah',
                     'alert-type' => 'success'
                 );
-        
-                return redirect()->route('admin.books')->with($notification);
+                Session::flash('status', 'Data Buku Berhasil DiUpdate!!!');
+                return redirect()->route('admin.books');
 
     }
 
@@ -122,7 +121,7 @@ class AdminController extends Controller
         Storage::delete('public/cover_buku/'.$book->cover);
         $book->delete();
 
-        return redirect()->back();
+        return response()->json($book);
     }
 
     public function print_books()

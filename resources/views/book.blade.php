@@ -8,6 +8,8 @@
     <div class="card card-default">
         <div class="card-header">{{__('Pengelolaan Data Film')}}</div>
         <div class="card-body">
+            @can('isAdmin')
+                 
             <button class="btn btn-primary" data-toggle="modal" data-target="#tambahBukuModal">
                 Tambah Film <i class="fa fa-plus"></i> 
             </button>
@@ -19,7 +21,8 @@
                 data-target="#importDataModal"><i class="fa fa-file-excel"></i> Import</button>
                 </div>
             <hr/>
-            <table id="table-data" class="table table-borderer">
+            @endcan
+            <table id="table" class="table table-borderer">
                 <thead>
                     <tr class="text-center">
                         <th>NO</th>
@@ -31,38 +34,44 @@
                         <th>Aksi</th>
                     </tr>
                 </thead>
+                
+                    
                 <tbody>
                     @php $no=1; @endphp
                     @foreach ($books as $item => $book)
-                        <tr id="table-row{{$book->id}}">
-                            <td>{{$no++}}</td>
-                            <td>{{$book->judul}}</td>
-                            <td>{{$book->penulis}}</td>
-                            <td>{{$book->tahun}}</td>
-                            <td>{{$book->penerbit}}</td>
-                            <td>
-                                @if ($book->cover !== null)
-                                    <img src="{{asset('storage/cover_buku/'.$book->cover)}}" width="100px"/>
-                                @else
-                                [Gambar tidak tersedia]
-                                @endif    
-                            </td>
-                            <td></td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <form action="books/delete/{{$book->id}}" method="post">
+                    <tr id="table-row{{$book->id}}">
+                        <td>{{$no++}}</td>
+                        <td>{{$book->judul}}</td>
+                        <td>{{$book->penulis}}</td>
+                        <td>{{$book->tahun}}</td>
+                        <td>{{$book->penerbit}}</td>
+                        <td>
+                            @if ($book->cover !== null)
+                            <img src="{{asset('storage/cover_buku/'.$book->cover)}}" width="100px"/>
+                            @else
+                            [Gambar tidak tersedia]
+                            @endif    
+                        </td>
+                        <td></td>
+                        @can('isAdmin')
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <form action="books/delete/{{$book->id}}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button type="button" id="btn-edit-buku" class="btn btn-success"
                                     data-toggle="modal" data-target="#editBukuModal" data-id="{{ $book->id }}">Edit</button>
-                                    
-                                    <button type="submit" id="btn-delete-buku" class="btn btn-danger" data-id="{{$book->id}}" value="{{$book->id}}">Hapus</button>   
+                                    <button type="button" class="btn btn-danger" id="btn-delete-buku" data-id="{{ $book->id }} class="btn btn-danger">Hapus</button>
+                                    {{-- onclick="deleteConfirmation('{{ $book->id }}','{{ $book->judul }}')"   --}}
+                                    {{-- <button type="submit" id="btn-delete-buku" class="btn btn-danger"  onclick="deleteConfirmation('{{$book->id}}','{{$book->judul}}')">Hapus</button>    --}}
                                 </form>
-                                </div>    
-                            </td>  
-                        </tr>
-                        @endforeach
+                            </div>    
+                        </td> 
+                        @endcan 
+                    </tr>
+                    @endforeach
                 </tbody>
+               
             </table>
         </div>
     </div>
@@ -70,15 +79,15 @@
 <div class="modal fade" id="tambahBukuModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Buku</h5>
+            <div class="modal-header">   
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Film</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-                <div class="modal-body">
-                    <form action="{{ route('admin.book.submit') }}" enctype="multipart/form-data" method="post">
-                        @csrf
+            <div class="modal-body">
+                <form action="{{ route('admin.book.submit') }}" enctype="multipart/form-data" method="post">
+                    @csrf
                         <div class="form-group">
                             <label for="judul">Judul Film</label>
                             <input type="text" class="form-control" name="judul" id="judul" required/>
@@ -104,16 +113,16 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-primary">Kirim</button>
                     </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="editBukuModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Data Film</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <div class="modal fade" id="editBukuModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Film</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -217,11 +226,51 @@
                     });
                 });
         });
+        // function deleteConfirmation(npm, judul) {
+        //     swal.fire({
+        //         title: "Hapus?",
+        //         icon: "warning",
+        //         text: "Apakah anda yakin akan menghapus data buku dengan judul " + judul + " ?!",
+        //         cancleButtonText: "tidak",
+        //         showCancelButton: true,
+        //         confirmButton: true,
+        //     }).then(function(e) {
+        //         if (e.value === true) {
+        //             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        //             $.ajax({
+        //                 type: 'delete',
+        //                 url: 'books/delete/' + npm,
+        //                 data: {
+        //                     _token: CSRF_TOKEN
+        //                 },
+        //                 dataType: 'JSON',
+        //                 success: function(result) {
+        //                     if (result.success === true) {
+        //                         Swal.fire('Done!', result.message, 'success');
+        //                         setTimeout(() => {
+        //                             location.reload()
+        //                         }, 1000);
+        //                     } else {
+        //                         Swal.fire('Error!', result.message, 'error');
+        //                     }
+        //                 }
+        //             });
+        //         } else {
+        //             e.dismiss;
+        //         }
+        //     }, function(dismiss) {
+        //         return false;
+        //     })
+        // }
+    </script>
+       <script>
+        
     </script>
 <script>
+    
     $(function(){
         $(document).on('click', '#btn-delete-buku', function(){
-            var id = $(this).val();
+            var id =  $(this).data('id');
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -244,9 +293,9 @@
                                 success: function (response) {
                                     Swal.fire('Terhapus!', response.msg, 'success');
                                     console.log(response);
-                                        $("#table-row" + id).remove();
+                                       // $("#table-row" + id).remove();
                                         //$('#table-data').load(document.URL +  ' #table-data').ajax.reload();;
-                                        //window.location.reload();
+                                        window.location.reload();
                                 }
                             });
                         }

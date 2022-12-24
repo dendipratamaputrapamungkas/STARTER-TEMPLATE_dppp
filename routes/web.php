@@ -52,7 +52,7 @@ Route::patch('admin/books/update', [App\Http\Controllers\AdminController::class,
                                                                 ->name('admin.book.update')
                                                                 ->middleware('is_admin');
 Route::get('admin/ajaxadmin/dataBuku/{id}', [App\Http\Controllers\AdminController::class, 'getDataBuku']);
-Route::delete('admin/books/delete/{id}', [App\Http\Controllers\AdminController::class, 'delete_book'])
+Route::post('admin/books/delete/{id}', [App\Http\Controllers\AdminController::class, 'delete_book'])
                                                                 ->name('admin.book.delete')
                                                                 ->middleware('is_admin');
 
@@ -67,3 +67,7 @@ Route::post('admin/books/import', [App\Http\Controllers\AdminController::class, 
                                                                 ->name('admin.book.import')
                                                                 ->middleware('is_admin');
 
+
+Route::get('user/books', [App\Http\Controllers\UserController::class, 'book'])
+                                                                ->name('user.books')
+                                                                ->middleware('is_user');

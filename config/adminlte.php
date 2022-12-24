@@ -298,12 +298,7 @@ return [
             'topnav_right' => true,
             'can'  => 'isAdmin',
         ],
-        [
-            'text'         => 'Buku',
-            'url'         => 'admin/books',
-            'icon' => 'fas fa-fw fa-book',
-            'can'  => 'isAdmin',
-        ],
+       
         [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
@@ -317,13 +312,19 @@ return [
             'can'  => 'isAdmin',
         ],
         [
+            'text'         => 'Film',
+            'url'         => 'admin/books',
+            'icon' => 'fas fa-fw fa-book',
+            'can'  => 'isAdmin',
+        ],
+        [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
             'can'  => 'isUser',
         ],
         [
             'text'         => 'Film',
-            'url'         => 'admin/books',
+            'url'         => 'user/books',
             'icon' => 'fas fa-fw fa-book',
             'can'  => 'isUser',
         ],
@@ -446,7 +447,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

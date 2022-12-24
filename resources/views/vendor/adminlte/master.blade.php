@@ -1,79 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<script>
-
-    const Toast = Swal.mixin({
-        toast:true,
-        position: 'top-end',
-        showConfirmButton:false,
-        timer: 3000,
-    })
-
-    @if(Session::has('message'))
-        var type = "{{Session::get('alert-type')}}";
-
-        switch(type){
-            case 'info':
-                Toast.fire({
-                        type:'info',
-                        title: "{{Session::get('message')}}"
-            })
-            break;
-            case 'succes':
-                Toast.fire({
-                        type:'Success',
-                        title: "{{Session::get('message')}}"
-            })
-            break;
-            case 'warning':
-                Toast.fire({
-                        type:'warning',
-                        title: "{{Session::get('message')}}"
-            })
-            break;
-            case 'error':
-                Toast.fire({
-                        type:'error',
-                        title: "{{Session::get('message')}}"
-            })
-            break;
-            case 'dialog_error':
-                Swal.fire({
-                        type:'error',
-                        title:"Oopss",
-                        text: "{{Session::get('message')}}", timer: 3000
-            })
-            break;
-        }
-        @endif
-
-        @if($errors->any())
-            @foreach($errors->all() as $error)
-                Swal.fire({
-                    type: 'error',
-                    title:"Oopss",
-                    text: "{{ $error }}"
-
-                })
-                @endforeach
-            @endif
-            </script>
-
-<script>
-    @if($errors->any())
-        Swal.fire({
-                    type: 'error',
-                    title:"Oopss",
-                    text: "Terjadi suatu kesalahan"
-                })
-    @endif
-    $('#table-data').DataTable();
-    let baseurl = "<?=url('/')?>";
-    let fullURL = "<?=url()->full()?>";
-</script>
-
-
 <head>
 
     {{-- Base Meta Tags --}}
@@ -94,35 +21,37 @@
 
     {{-- Custom stylesheets (pre AdminLTE) --}}
     @yield('adminlte_css_pre')
-
+    
     {{-- Base Stylesheets --}}
     @if(!config('adminlte.enabled_laravel_mix'))
-        <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('vendor/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-
-        {{-- Configured Stylesheets --}}
+    <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    
+    {{-- Configured Stylesheets --}}
         @include('adminlte::plugins', ['type' => 'css'])
 
         <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
 
         @if(config('adminlte.google_fonts.allowed', true))
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-        @endif
-    @else
-        <link rel="stylesheet" href="{{ mix(config('adminlte.laravel_mix_css_path', 'css/app.css')) }}">
-    @endif
-
-    {{-- Livewire Styles --}}
-    @if(config('adminlte.livewire'))
-        @if(app()->version() >= 7)
+            @endif
+            @else
+            <link rel="stylesheet" href="{{ mix(config('adminlte.laravel_mix_css_path', 'css/app.css')) }}">
+            @endif
+            
+            {{-- Livewire Styles --}}
+            @if(config('adminlte.livewire'))
+            @if(app()->version() >= 7)
             @livewireStyles
-        @else
+            @else
             <livewire:styles />
-        @endif
-    @endif
+            @endif
+            @endif
+            
+            {{-- Custom Stylesheets (post AdminLTE) --}}
+            @yield('adminlte_css')
+            
 
-    {{-- Custom Stylesheets (post AdminLTE) --}}
-    @yield('adminlte_css')
 
     {{-- Favicon --}}
     @if(config('adminlte.use_ico_only'))
@@ -146,6 +75,8 @@
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
     @endif
+
+   
 
 </head>
 
@@ -179,6 +110,46 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if(session('status'))
+            Swal.fire({
+                title: 'Berhasil!',
+                text: "{{ session('status') }}",
+                icon: 'success',
+                timer: 3000
+            })
+        @endif
+        @if(session('error'))
+            Swal.fire({
+                title: 'Gagal!',
+                text: "{{ session('error') }}",
+                icon: 'error',
+                timer: 3000
+            })
+        @endif
+        @if($errors->any())
+            @php
+                $message = '';
+                foreach($errors->all() as $error)
+                {
+                    $message .= "<li> $error </li>";
+                }
+            @endphp
+            Swal.fire({
+                title: 'Error',
+                html: "{!! $message !!}",
+                icon: 'error',
+            })
+        @endif
+    </script>
+    <script>
+        $('#table').DataTable();
+    </script>
+    <script>
+        let baseurl = "<?=url('/')?>";
+        let fullUrl = "<?-url()->full()?>";
+</script>
 
 </body>
 
